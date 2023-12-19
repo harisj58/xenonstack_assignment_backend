@@ -3,6 +3,7 @@ import dotenv from "dotenv";
 import connectDB from "./db/connectDB.js";
 import cookieParser from "cookie-parser";
 import userRoutes from "./routes/userRoutes.js";
+import connectRoutes from "./routes/connectRoutes.js";
 import cors from "cors";
 
 // dotenv allows us to use the process.env variables in our app
@@ -20,23 +21,23 @@ connectDB();
 // in order to check that the server will permit the actual request.
 // In that preflight, the browser sends headers that indicate the HTTP
 // method and headers that will be used in the actual request.
-// app.use(cors());
-// app.options("*", cors({ origin: true, credentials: true }));
-// app.use(function (req, res, next) {
-//   res.header("Access-Control-Allow-Origin", "*");
-//   res.setHeader(
-//     "Access-Control-Allow-Methods",
-//     "GET, POST, OPTIONS, PUT, PATCH, DELETE"
-//   );
-//   res.header(
-//     "Access-Control-Allow-Headers",
-//     "Origin, X-Requested-With, Content-Type, Accept"
-//   );
-//   next();
-// });
+app.use(cors());
+app.options("*", cors({ origin: true, credentials: true }));
+app.use(function (req, res, next) {
+  res.header("Access-Control-Allow-Origin", "*");
+  res.setHeader(
+    "Access-Control-Allow-Methods",
+    "GET, POST, OPTIONS, PUT, PATCH, DELETE"
+  );
+  res.header(
+    "Access-Control-Allow-Headers",
+    "Origin, X-Requested-With, Content-Type, Accept"
+  );
+  next();
+});
 
 // set the PORT to the env variable or default to 5000
-const PORT = process.env.PORT || 5000;
+const PORT = process.env.PORT || 8000;
 
 // To parse JSON data in the req.body
 app.use(express.json({ limit: "50mb" }));
@@ -47,6 +48,7 @@ app.use(cookieParser());
 
 // Routes
 app.use("/api/users/", userRoutes); // user routes
+app.use("/api/connects/", connectRoutes);
 
 // Initialize the express app to listen on PORT port
 app.listen(PORT, () =>
