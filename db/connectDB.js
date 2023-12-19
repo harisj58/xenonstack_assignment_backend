@@ -4,10 +4,7 @@ import mongoose from "mongoose";
 const connectDB = async () => {
   try {
     // create a connection using our CONNECTION_STRING env variable
-    const conn = await mongoose.connect(process.env.CONNECTION_STRING, {
-      useNewUrlParser: true,
-      useUnifiedTopology: true,
-    });
+    const conn = await mongoose.connect(process.env.CONNECTION_STRING);
 
     // log success to the console
     console.log(`MongoDB connection established: ${conn.connection.host}`);
